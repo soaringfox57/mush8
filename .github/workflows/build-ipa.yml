@@ -1,0 +1,28 @@
+name: Build Mush8 IPA
+
+on:
+  workflow_dispatch: # Allows you to manually click a button to start the build
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Tools
+        run: |
+          brew install xcodegen
+          rustup target add aarch64-apple-ios
+
+      - name: Build IPA
+        run: |
+          chmod +x make-ios.sh
+          ./make-ios.sh --ipa
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Mush8-IPA
+          path: build/Mush8.ipa
