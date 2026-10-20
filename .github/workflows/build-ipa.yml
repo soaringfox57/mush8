@@ -7,7 +7,7 @@ jobs:
   build:
     runs-on: macos-latest
     env:
-      ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true # Silences the Node deprecation exit barrier
+      ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
 
     steps:
       - name: Checkout Repository
@@ -20,6 +20,10 @@ jobs:
         run: |
           brew install xcodegen
           rustup target add aarch64-apple-ios
+
+      - name: Deploy Keys File
+        run: |
+          echo "${{ secrets.PROD_KEYS }}" > prod.keys
 
       - name: Build IPA
         run: |
