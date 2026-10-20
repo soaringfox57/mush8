@@ -25,6 +25,11 @@ jobs:
         run: |
           echo "${{ secrets.PROD_KEYS }}" > prod.keys
 
+      - name: Create Dummy Game Files
+        run: |
+          touch base.nsp
+          touch update.nsp
+
       - name: Build IPA
         run: |
           chmod +x make-ios.sh
